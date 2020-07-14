@@ -4,13 +4,17 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script src="px-rem-index.js"></script>
+	<link rel="stylesheet" href="index.css">
 </head>
 <body>
 	<div id="app">
+	<!-- 插槽 （必须）-->
 	</div>
+	<!-- 按钮 -->
 	<button class='reset1'>复原</button>
-	<script src="./index.js">		
-	</script>
+	<!-- 引入拼图js -->
+	<script src="./index.js"></script>		
+	
 	<script>
 /**
  * @param {绑定渲染节点插槽（必填）}  el
@@ -24,7 +28,7 @@
  * @param {   初始化完成后执行的函数(同步执行)  }   mounted
  * @param {    游戏成功后执行的函数(同步执行)   }   success
  */
-		var puzzle = new Puzzle({
+	var puzzle = new Puzzle({
         el:'#app',  //插槽
         data:{
             width:9,//宽

@@ -8,7 +8,7 @@
     margin-top: 2rem;
     margin: 2rem auto;
   }
-  .puzzle .block {
+  .puzzle .puzzle_block {
     border: 0.04rem solid #ccc;
   }
   
