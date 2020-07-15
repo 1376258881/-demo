@@ -38,6 +38,7 @@
 | startBtn   |   绑定触发游戏开始结束按钮（选填）      |      按钮的节点选择器       |string|
 | mounted   |   初始化完成后执行的回调（选填）      |      初始化完成后执行的回调,同步执行       |function|
 | success   |   初始化完成后执行的回调（选填）      |      拼图成功后的回调 同步执行       |function|
+| update   |   游戏拖拽每一步动画结束后会执行的回调（选填）      |      游戏拖拽每一步动画结束后会执行的回调,形参toDom:被交换的元素 ,fromDom:被交换的元素 同步执行       |function|
 - 举例:
 ```
 /**
@@ -51,6 +52,7 @@
  * @param {   初次渲染是否为默认为未开始状态(选填)  }   isReset
  * @param {   初始化完成后执行的函数(同步执行)(选填)  }   mounted
  * @param {    游戏成功后执行的函数(同步执行)(选填)   }   success
+ * @param {    游戏拖拽每一步动画结束后会执行的回调(同步执行)(选填)   }  update
  */
   var puzzle = new Puzzle({
         el:'#app',  //插槽
@@ -80,6 +82,9 @@
 	        		reset1.innerText ='自定义按钮--复原';
 	        	}
         	}, false)
+        },
+	update(toDom,fromDom){//toDom 被交换的元素 , fromDom被拖拽的元素
+            console.log(toDom,fromDom)
         },
         success(){// 拼图成功后的回调 同步执行
             document.querySelector('.reset1').innerText='自定义按钮--开始'
