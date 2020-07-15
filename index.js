@@ -1,8 +1,7 @@
 Puzzle.prototype = {
     init (options){  //初始化
-        this.initData(options);        
+        this.initData(options);
         if(!this.isReset && this.startBtn){
-        	console.log(!this.isReset,this.startBtn)
             this.isReset = true;
             this.render(this.isReset) ;
             this.handle();
@@ -14,12 +13,11 @@ Puzzle.prototype = {
                     e.initEvent("click", true, true);
                     this.startBtn.dispatchEvent(e); 
                 }
-                
             },0)
         }else{
             this.render(this.isReset) ;
             this.handle();
-        }          
+        }
     },
     initData(options){ //数据初始化赋值
         var self = this;
@@ -33,7 +31,8 @@ Puzzle.prototype = {
         this.col = options.data.col;  //总列数
         this.puzzleImg  = options.data.puzzleImg; //背景图片的路径
         this.callBack = options.success || function(){return}; //拼图成功后的回调
-        this.mounted = options.mounted || function(){return};
+        this.mounted = options.mounted || function(){return}; //初始化完成后执行的回调
+        this.update = options.update || function(){return}; //滑动图片碎片结束后执行的回调
         this.beforeHandle = options.beforeHandle;
         this.isReset = options.data.isReset  || false ; //是否不随机
         //每个块的宽高  = 总宽高 / 行列  
@@ -103,7 +102,7 @@ Puzzle.prototype = {
                         left: ${positionX}rem;
                     "                  
                 ></div>            
-            `;
+            `
             //追加元素
             this.oPuzzle.innerHTML = template;
             this.oPuzzle.style.width = this.puzzleWidth + 'rem';
@@ -115,7 +114,7 @@ Puzzle.prototype = {
     },
     handle(){ //行为
         var self = this;
-        	this.resetImg();     
+            this.resetImg();     
         var startx, starty,x,y,endx,endy,from,to;
         var lis = document.querySelectorAll(".puzzle_block");
         for(var i = 0; i < lis.length;i++){       
@@ -127,6 +126,7 @@ Puzzle.prototype = {
                 if(self.isReset){
                     x =  e.changedTouches[0].pageX/self.htmlFontSize  - startx;
                     y = e.changedTouches[0].pageY/self.htmlFontSize  -  starty;
+                    return false
                 }else{
                     x =  e.changedTouches[0].pageX/self.htmlFontSize  - parseFloat(startx);
                     y = e.changedTouches[0].pageY/self.htmlFontSize  - parseFloat(starty);
@@ -173,10 +173,16 @@ Puzzle.prototype = {
                     
                     to.style.left = startx;
                     to.style.top = starty;                    
-                }    
+                } 
+                
             })             
-            lis[i].addEventListener('transitionend', function () {             
-                self.checkWin() //动画结束，判断是否为赢
+            lis[i].addEventListener('transitionend', function () {  
+                if(to && from && self.oneFlag == false){
+                    self.oneFlag =true;
+                    self.update(to,from);
+                    self.checkWin() //动画结束，判断是否为赢
+                } 
+               
             })                
         }
         this.mounted() //渲染完成后执行        
@@ -213,7 +219,7 @@ Puzzle.prototype = {
             }
         }
       //isWin  ==true 则判断为赢  this.oneFlag==false 只执行一次的开关，避免重复执行  this.isReset == false 避免复原成功状态下点击继续执行
-        if (isWin && this.oneFlag==false && this.isReset == false) {
+        if (isWin  && this.isReset == false) {
             this.oneFlag = true
             this.GameWin(this.callBack)
         }
@@ -239,7 +245,7 @@ Puzzle.prototype = {
                 this.startBtn.classList.remove('oPuzzle_start') 
             }
             self.blockPosition = self.getBlockPosition()
-            this.startBtn.addEventListener('click' ,function(){
+            this.startBtn.addEventListener('click',function(){
                 if (self.isReset) {
                     self.isReset =false ; 
                     this.innerText = '复原'  ;  //初始按钮显示文本
@@ -247,19 +253,20 @@ Puzzle.prototype = {
                     this.classList.remove('oPuzzle_start');
                     self.blockPosition = self.getBlockPosition()
                     self.cellOrder(self.blockPosition)
-                } else {                     
+                } else {  
                     self.isReset =true;
                     this.innerText = '开始';
                     this.className += ' oPuzzle_start' 
                     this.classList.remove('oPuzzle_reset') 
                     self.cellOrder(self.blockImgPosition)
                 } 
-            } )     
+            },false)      
         }          
     },
 }
 function Puzzle (options) {
     this.init(options);
 }
+
 
 
