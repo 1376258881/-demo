@@ -1,7 +1,6 @@
 Puzzle.prototype = {
     init (options){  //初始化
-        this.initData(options);
-        
+        this.initData(options);        
         if(!this.isReset && this.startBtn){
         	console.log(!this.isReset,this.startBtn)
             this.isReset = true;
@@ -20,9 +19,7 @@ Puzzle.prototype = {
         }else{
             this.render(this.isReset) ;
             this.handle();
-        }
-        
-       
+        }          
     },
     initData(options){ //数据初始化赋值
         var self = this;
@@ -47,11 +44,7 @@ Puzzle.prototype = {
         //随机排序的  元素位置信息对象的数组
         this.blockPosition = this.getBlockPosition();
         setTimeout(function(){
-<<<<<<< HEAD
             self.oBlockMap = self.oPuzzle.getElementsByClassName('puzzle_block');
-=======
-            self.oBlockMap = self.oPuzzle.getElementsByClassName('block');
->>>>>>> 0a431a81324b44b359177f0da79bfd70c5f820a8
         },0)
         this.htmlFontSize = document.querySelector("html").style.fontSize  //获取1rem对应的px换算
         if ( this.htmlFontSize) {this.htmlFontSize = parseFloat(this.htmlFontSize)}               
@@ -97,11 +90,7 @@ Puzzle.prototype = {
             var positionY = this.blockImgPosition[i].y;
             template += `   
                 <div
-<<<<<<< HEAD
                     class='puzzle_block'
-=======
-                    class='block'
->>>>>>> 0a431a81324b44b359177f0da79bfd70c5f820a8
                     style="
                         width:${this.blockWidth}rem;
                         height: ${this.blockHeiht}rem;
@@ -114,7 +103,7 @@ Puzzle.prototype = {
                         left: ${positionX}rem;
                     "                  
                 ></div>            
-            `
+            `;
             //追加元素
             this.oPuzzle.innerHTML = template;
             this.oPuzzle.style.width = this.puzzleWidth + 'rem';
@@ -128,11 +117,7 @@ Puzzle.prototype = {
         var self = this;
         	this.resetImg();     
         var startx, starty,x,y,endx,endy,from,to;
-<<<<<<< HEAD
         var lis = document.querySelectorAll(".puzzle_block");
-=======
-        var lis = document.querySelectorAll(".block");
->>>>>>> 0a431a81324b44b359177f0da79bfd70c5f820a8
         for(var i = 0; i < lis.length;i++){       
             lis[i].addEventListener('touchstart',function(e){
                 this.style.zIndex = 100; //设置拖拽元素的z-index值，使其在最上面。
@@ -205,11 +190,7 @@ Puzzle.prototype = {
         }
     },
     change(from, x, y){  //获取交换元素
-<<<<<<< HEAD
         var lis = document.querySelectorAll(".puzzle_block");
-=======
-        var lis = document.querySelectorAll(".block");
->>>>>>> 0a431a81324b44b359177f0da79bfd70c5f820a8
         for (var i = 0; i < lis.length; i++) { //还必须判断是不是当前原素本身。将自己排除在外
             if (Math.abs(lis[i].offsetLeft/this.htmlFontSize - x) <= this.blockWidth / 2 && Math.abs(lis[i].offsetTop/this.htmlFontSize - y) <= this.blockHeiht / 2 && lis[i] != from)
                 return lis[i];
@@ -258,7 +239,7 @@ Puzzle.prototype = {
                 this.startBtn.classList.remove('oPuzzle_start') 
             }
             self.blockPosition = self.getBlockPosition()
-            this.startBtn.onclick = function(){
+            this.startBtn.addEventListener('click' ,function(){
                 if (self.isReset) {
                     self.isReset =false ; 
                     this.innerText = '复原'  ;  //初始按钮显示文本
@@ -266,15 +247,14 @@ Puzzle.prototype = {
                     this.classList.remove('oPuzzle_start');
                     self.blockPosition = self.getBlockPosition()
                     self.cellOrder(self.blockPosition)
-                } else {  
-                   
+                } else {                     
                     self.isReset =true;
                     this.innerText = '开始';
                     this.className += ' oPuzzle_start' 
                     this.classList.remove('oPuzzle_reset') 
                     self.cellOrder(self.blockImgPosition)
                 } 
-            }      
+            } )     
         }          
     },
 }

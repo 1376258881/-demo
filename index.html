@@ -4,7 +4,6 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script src="px-rem-index.js"></script>
-<<<<<<< HEAD
 	<link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -15,16 +14,6 @@
 	<button class='reset1'>复原</button>
 	<!-- 引入拼图js -->
 	<script src="./index.js"></script>		
-	
-=======
-</head>
-<body>
-	<div id="app">
-	</div>
-	<button class='reset1'>复原</button>
-	<script src="./index.js">		
-	</script>
->>>>>>> 0a431a81324b44b359177f0da79bfd70c5f820a8
 	<script>
 /**
  * @param {绑定渲染节点插槽（必填）}  el
@@ -38,12 +27,8 @@
  * @param {   初始化完成后执行的函数(同步执行)  }   mounted
  * @param {    游戏成功后执行的函数(同步执行)   }   success
  */
-<<<<<<< HEAD
 	var puzzle = new Puzzle({
-=======
-		var puzzle = new Puzzle({
->>>>>>> 0a431a81324b44b359177f0da79bfd70c5f820a8
-        el:'#app',  //插槽
+        el:'#app',
         data:{
             width:9,//宽
             height:9,//高
@@ -63,7 +48,7 @@
         	} 
         		//自定义初始化
         	reset1.addEventListener('click', function(){
-        		 isStart = !isStart;
+        		 var isStart = reset1.classList.contains('oPuzzle_start');
         		if(isStart){ 
         			reset1.innerText ='自定义按钮--开始';
 	        	}else {
