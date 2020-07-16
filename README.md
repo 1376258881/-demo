@@ -52,7 +52,7 @@
  * @param {   初次渲染是否为默认为未开始状态(选填)  }   isReset
  * @param {   初始化完成后执行的函数(同步执行)(选填)  }   mounted
  * @param {    游戏成功后执行的函数(同步执行)(选填)   }   success
- * @param {    游戏拖拽每一步动画结束后会执行的回调(同步执行)(选填)   }  update
+ * @param {    游戏拖拽每一步动画结束后会执行的回调(同步执行)(选填)   }  stepUpdate
  */
   var puzzle = new Puzzle({
         el:'#app',  //插槽
@@ -83,8 +83,8 @@
 	        	}
         	}, false)
         },
-	update(toDom,fromDom){//toDom 被交换的元素 , fromDom被拖拽的元素
-            console.log(toDom,fromDom)
+	stepUpdate(fromDom,toDom){//toDom 被交换的元素 , fromDom被拖拽的元素
+            console.log(fromDom,toDom)
         },
         success(){// 拼图成功后的回调 同步执行
             document.querySelector('.reset1').innerText='自定义按钮--开始'
